@@ -51,37 +51,37 @@ if (Meteor.isClient) {
         } else if (element === 'pedra' && (elements[machineChoice] === 'papel')) {
           $ionicPopup.alert({
             title: 'Você perdeu',
-            template: 'A máquina escolheu papel',
+            template: '<img ng-src="imgs/paper-win.png" class="result-img-adjusment">',
           });
           $scope.losses += 1;
         } else if (element === 'pedra' && (elements[machineChoice] === 'tesoura')) {
           $ionicPopup.alert({
             title: 'Você ganhou',
-            template: 'A máquina escolheu tesoura',
+            template: '<img ng-src="imgs/win.png" class="result-img-adjusment">',
           });
           $scope.wins += 1;
         } else if (element === 'papel' && (elements[machineChoice] === 'tesoura')) {
           $ionicPopup.alert({
             title: 'Você perdeu',
-            template: 'A máquina escolheu tesoura',
+            template: '<img ng-src="imgs/scissors-win.png" class="result-img-adjusment">',
           });
           $scope.losses += 1;
         } else if (element === 'papel' && (elements[machineChoice] === 'pedra')) {
           $ionicPopup.alert({
             title: 'Você ganhou',
-            template: 'A máquina escolheu pedra',
+            template: '<img ng-src="imgs/win.png" class="result-img-adjusment">',
           });
           $scope.wins += 1;
         } else if (element === 'tesoura' && (elements[machineChoice] === 'pedra')) {
           $ionicPopup.alert({
             title: 'Você perdeu',
-            template: 'A máquina escolheu pedra',
+            template: '<img ng-src="imgs/rock-win.png" class="result-img-adjusment">',
           });
           $scope.losses += 1;
         } else if (element === 'tesoura' && (elements[machineChoice] === 'papel')) {
           $ionicPopup.alert({
             title: 'Você ganhou',
-            template: 'A máquina escolheu papel',
+            template: '<img ng-src="imgs/win.png" class="result-img-adjusment">',
           });
           $scope.wins += 1;
         } else {
