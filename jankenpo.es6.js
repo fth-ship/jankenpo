@@ -6,6 +6,10 @@ if (Meteor.isClient) {
       '$ionicPopup',
       ($log, $scope, $ionicPopup) => {
       $log.debug('O controller principal esta funcionando!');
+      $scope.wins = 0;
+      $scope.draws = 0;
+      $scope.losses = 0;
+
       $scope.onChoose = (element) => {
         $log.debug('on choose ' + element);
         var nextElements = (element) => {
@@ -43,41 +47,49 @@ if (Meteor.isClient) {
             title: 'Empate',
             template: 'Mesmo elemento escolhido!',
           });
+          $scope.draws += 1;
         } else if (element === 'pedra' && (elements[machineChoice] === 'papel')) {
           $ionicPopup.alert({
             title: 'Você perdeu',
             template: 'A máquina escolheu papel',
           });
+          $scope.losses += 1;
         } else if (element === 'pedra' && (elements[machineChoice] === 'tesoura')) {
           $ionicPopup.alert({
             title: 'Você ganhou',
             template: 'A máquina escolheu tesoura',
           });
+          $scope.wins += 1;
         } else if (element === 'papel' && (elements[machineChoice] === 'tesoura')) {
           $ionicPopup.alert({
             title: 'Você perdeu',
             template: 'A máquina escolheu tesoura',
           });
+          $scope.losses += 1;
         } else if (element === 'papel' && (elements[machineChoice] === 'pedra')) {
           $ionicPopup.alert({
             title: 'Você ganhou',
             template: 'A máquina escolheu pedra',
           });
+          $scope.wins += 1;
         } else if (element === 'tesoura' && (elements[machineChoice] === 'pedra')) {
           $ionicPopup.alert({
             title: 'Você perdeu',
             template: 'A máquina escolheu pedra',
           });
+          $scope.losses += 1;
         } else if (element === 'tesoura' && (elements[machineChoice] === 'papel')) {
           $ionicPopup.alert({
             title: 'Você ganhou',
             template: 'A máquina escolheu papel',
           });
+          $scope.wins += 1;
         } else {
           $ionicPopup.alert({
             title: 'Regra sem cobertura',
             template: 'Regra sem cobertura'
           });
+          $scope.losses += 1;
         }
       };
     }])
