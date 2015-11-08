@@ -12,7 +12,8 @@ if (Meteor.isClient) {
 
       $scope.onChoose = (element) => {
         $log.debug('on choose ' + element);
-        var nextElements = (element) => {
+        var nextElements = (elements, element) => {
+          $log.debug('next elements ' + elements + ' with ' + element);
           var randomPosition = Math.max(0, Math.round(Math.random() * 1));
           if (element === 'pedra' && (randomPosition)) {
             elements.push('tesoura');
@@ -33,9 +34,19 @@ if (Meteor.isClient) {
             elements.push('papel');
             elements.push('pedra');
           }
+          return elements;
+        };
+        var randomReverse = (elements) => {
+          $log.debug('random reverse with ' + elements);
+          var isReverse = Math.max(0, Math.round(Math.random() * 1));
+          if (isReverse) {
+            elements = elements.reverse();
+          }
+          return elements;
         };
         var elements = [element];
-        nextElements(element);
+        elements = nextElements(elements, element);
+        elemensts = randomReverse(elements);
         $log.debug(elements);
         var machineChoice = Math.max(0, Math.floor(Math.random() * 3));
 
