@@ -3,16 +3,16 @@
     <h1 class="title">Jankenpo</h1>
   </div>
   <ion-content class="padding custom-padding">
-    <div class="list card">
-      <div class="item item-icon-left">
+    <div class="list card card-custom">
+      <div class="item item-icon-left item-text-custom">
         <i class="icon ion-android-star"></i>
         Ganhou {{wins}} vez{{wins > 1 ? 'es':''}}
       </div>
-      <div class="item item-icon-left">
+      <div class="item item-icon-left item-text-custom">
         <i class="icon ion-android-star-half"></i>
         Empatou {{draws}} vez{{draws > 1 ? 'es':''}}
       </div>
-      <div class="item item-icon-left">
+      <div class="item item-icon-left item-text-custom">
         <i class="icon ion-android-star-outline"></i>
         Perdeu {{losses}} vez{{losses > 1 ? 'es':''}}
       </div>
@@ -20,22 +20,22 @@
     <!-- Elements of the game -->
     <ion-slide-box>
       <ion-slide>
-        <div class="list card">
-          <div class="item item-image">
+        <div class="list card card-custom">
+          <div class="item item-image item-custom">
             <img ng-src="imgs/rock.png" on-tap="onChoose('pedra')">
           </div>
         </div>
       </ion-slide>
       <ion-slide>
-        <div class="list card">
-          <div class="item item-image">
+        <div class="list card card-custom">
+          <div class="item item-image item-custom">
             <img ng-src="imgs/paper.png" on-tap="onChoose('papel')">
           </div>
         </div>
       </ion-slide>
       <ion-slide>
-        <div class="list card">
-          <div class="item item-image">
+        <div class="list card card-custom">
+          <div class="item item-image item-custom">
             <img ng-src="imgs/scissors.png" on-tap="onChoose('tesoura')">
           </div>
         </div>
