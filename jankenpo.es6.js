@@ -52,6 +52,7 @@ if (Meteor.isClient) {
         randomReverse, machineChoice
       ) => {
       $log.debug('O controller principal esta funcionando!');
+      $scope.rounds = 0;
       $scope.wins = 0;
       $scope.draws = 0;
       $scope.losses = 0;
@@ -115,6 +116,8 @@ if (Meteor.isClient) {
           });
           $scope.losses += 1;
         }
+
+        $scope.rounds += 1;
       };
     }])
     .run([
