@@ -1,6 +1,16 @@
 if (Meteor.isClient) {
   angular
     .module('jankenpo', ['angular-meteor', 'ionic'])
+    .value('visualElements', {
+      win: 'imgs/win.png',
+      paperWin: 'imgs/paper-win.png',
+      scissorsWin: 'imgs/scissors-win.png',
+      rockWin: 'imgs/rock-win.png',
+
+    })
+    .value('rock', 'pedra')
+    .value('paper', 'papel')
+    .value('scissors', 'tesoura')
     .factory('nextElements', [
       '$log', 'rock',
       'paper', 'scissors', (
@@ -48,27 +58,37 @@ if (Meteor.isClient) {
         return Math.max(0, Math.floor(Math.random() * 3))
       };
     }])
-    .value('visualElements', {
-      win: '<img ng-src="imgs/win.png" class="result-img-adjusment">',
-      paperWin: '<img ng-src="imgs/paper-win.png" class="result-img-adjusment">',
-      scissorsWin: '<img ng-src="imgs/scissors-win.png" class="result-img-adjusment">',
-      rockWin: '<img ng-src="imgs/rock-win.png" class="result-img-adjusment">',
-
-    })
-    .value('rock', 'pedra')
-    .value('paper', 'papel')
-    .value('scissors', 'tesoura')
+    .factory('showAlert', [
+      '$ionicPopup',
+      ($ionicPopup) => {
+        return (obj) => $ionicPopup.alert(obj);
+      }
+    ])
+    .factory('isDraw', [() => {
+      return (elements, element, choice) => element === elements[choice];
+    }])
+    .factory('isRockLoss', ['rock', 'paper', (rock, paper) => {
+      return (elements, element, choice) => element === rock && (elements[choice] === paper);
+    }])
+    .factory('isRockWin', ['rock', 'scissors', (rock, scissors) => {
+      return (elements, element, choice) => element === rock && (elements[choice] === scissors);
+    }])
+    .factory('isPaperLoss', ['paper', 'scissors', (paper, scissors) => {
+      return (elements, element, choice) => element === paper && (elements[choice] === scissors);
+    }])
     .controller('MainCtrl', [
       '$log', '$scope',
       '$ionicPopup', 'nextElements',
       'randomReverse', 'machineChoice',
       'visualElements', 'rock',
-      'paper', 'scissors', (
+      'paper', 'scissors',
+      'showAlert', (
         $log, $scope,
         $ionicPopup, nextElements,
         randomReverse, machineChoice,
         visualElements, rock,
-        paper, scissors
+        paper, scissors,
+        showAlert,
       ) => {
       $log.debug('O controller principal esta funcionando!');
       // scope shared vars
@@ -78,14 +98,13 @@ if (Meteor.isClient) {
       $scope.losses = 0;
       $scope.yourChoices = [];
       // local vars
-      var showAlert = (obj) => $ionicPopup.alert(obj);
       var isDraw = (elements, element, choice) => element === elements[choice];
-      var rockLoss = (elements, element, choice) => element === rock && (elements[choice] === paper);
-      var rockWin = (elements, element, choice) => element === rock && (elements[choice] === scissors);
-      var paperLoss = (elements, element, choice) => element === paper && (elements[choice] === scissors);
-      var paperWin = (elements, element, choice) => element === paper && (elements[choice] === rock);
-      var scissorsLoss = (elements, element, choice) => element === scissors && (elements[choice] === rock);
-      var scissorsWin = (elements, element, choice) => element === scissors && (elements[choice] === paper);
+      var isRockLoss = (elements, element, choice) => element === rock && (elements[choice] === paper);
+      var isRockWin = (elements, element, choice) => element === rock && (elements[choice] === scissors);
+      var isPaperLoss = (elements, element, choice) => element === paper && (elements[choice] === scissors);
+      var isPaperWin = (elements, element, choice) => element === paper && (elements[choice] === rock);
+      var isScissorsLoss = (elements, element, choice) => element === scissors && (elements[choice] === rock);
+      var isScissorsWin = (elements, element, choice) => element === scissors && (elements[choice] === paper);
       // scope shared functions
       $scope.onChoose = (element) => {
         $log.debug('on choose ' + element);
@@ -103,40 +122,40 @@ if (Meteor.isClient) {
             template: 'Mesmo elemento escolhido!',
           });
           $scope.draws += 1;
-        } else if (rockLoss(elements, element, machineChoose)) {
+        } else if (isRockLoss(elements, element, machineChoose)) {
           showAlert({
             title: 'Você perdeu',
-            template: visualElements.paperWin,
+            template: '<img ng-src="' + visualElements.paperWin + '" class="result-img-adjusment">',
           });
           $scope.losses += 1;
-        } else if (rockWin(elements, element, machineChoose)) {
+        } else if (isRockWin(elements, element, machineChoose)) {
           showAlert({
             title: 'Você ganhou',
-            template: visualElements.win,
+            template: '<img ng-src="' + visualElements.win + '" class="result-img-adjusment">',
           });
           $scope.wins += 1;
-        } else if (paperLoss(elements, element, machineChoose)) {
+        } else if (isPaperLoss(elements, element, machineChoose)) {
           showAlert({
             title: 'Você perdeu',
-            template: visualElements.scissorsWin,
+            template: '<img ng-src="' + visualElements.scissorsWin + '" class="result-img-adjusment">',
           });
           $scope.losses += 1;
-        } else if (paperWin(elements, element, machineChoose)) {
+        } else if (isPaperWin(elements, element, machineChoose)) {
           showAlert({
             title: 'Você ganhou',
-            template: visualElements.win,
+            template: '<img ng-src="' + visualElements.win + '" class="result-img-adjusment">',
           });
           $scope.wins += 1;
-        } else if (scissorsLoss(elements, element, machineChoose)) {
+        } else if (isScissorsLoss(elements, element, machineChoose)) {
           showAlert({
             title: 'Você perdeu',
-            template: visualElements.rockWin,
+            template: '<img ng-src="' + visualElements.rockWin + '" class="result-img-adjusment">',
           });
           $scope.losses += 1;
-        } else if (scissorsWin(elements, element, machineChoose)) {
+        } else if (isScissorsWin(elements, element, machineChoose)) {
           showAlert({
             title: 'Você ganhou',
-            template: visualElements.win,
+            template: '<img ng-src="' + visualElements.rockWin + '" class="result-img-adjusment">',
           });
           $scope.wins += 1;
         } else {
@@ -158,9 +177,7 @@ if (Meteor.isClient) {
 
   if (Meteor.isCordova) {
     angular.element(document).on('deviceready', onReady);
-  }
-
-  else {
+  } else {
     angular.element(document).ready(onReady);
   }
 }
