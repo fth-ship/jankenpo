@@ -76,19 +76,66 @@ if (Meteor.isClient) {
     .factory('isPaperLoss', ['paper', 'scissors', (paper, scissors) => {
       return (elements, element, choice) => element === paper && (elements[choice] === scissors);
     }])
+    .factory('isPaperWin', ['paper', 'rock', (paper, rock) => {
+      return (elements, element, choice) => element === paper && (elements[choice] === rock);
+    }])
+    .factory('isScissorsLoss', ['scissors', 'rock', (scissors, rock) => {
+      return (elements, element, choice) => element === scissors && (elements[choice] === rock);
+    }])
+    .factory('isScissorsWin', ['scissors', 'paper', (scissors, paper) => {
+      return (elements, element, choice) => element === scissors && (elements[choice] === paper);
+    }])
+    .factory('drawAlert', ['showAlert', (showAlert) => {
+      return () => {
+        showAlert({
+          title: 'Empate',
+          template: 'Mesmo elemento escolhido!',
+        });
+      };
+    }])
+    .factory('lossAlert', ['showAlert', (showAlert) => {
+      return (imagePath) => {
+        showAlert({
+          title: 'Você perdeu',
+          template: '<img ng-src="' + imagePath + '" class="result-img-adjusment">',
+        });
+      };
+    }])
+    .factory('winAlert', ['showAlert', (showAlert) => {
+      return (imagePath) => {
+        showAlert({
+          title: 'Você ganhou',
+          template: '<img ng-src="' + imagePath + '" class="result-img-adjusment">',
+        });
+      };
+    }])
+    .factory('uncoveredAlert', ['showAlert', (showAlert) => {
+      return () => {
+        showAlert({
+          title: 'Regra sem cobertura',
+          template: 'Regra sem cobertura'
+        });
+      };
+    }])
     .controller('MainCtrl', [
       '$log', '$scope',
       '$ionicPopup', 'nextElements',
       'randomReverse', 'machineChoice',
-      'visualElements', 'rock',
-      'paper', 'scissors',
-      'showAlert', (
+      'visualElements', 'isDraw',
+      'isRockLoss', 'isRockWin',
+      'isPaperLoss', 'isPaperWin',
+      'isScissorsLoss', 'isScissorsWin',
+      'drawAlert', 'lossAlert',
+      'winAlert', 'showAlert', (
         $log, $scope,
         $ionicPopup, nextElements,
         randomReverse, machineChoice,
-        visualElements, rock,
-        paper, scissors,
-        showAlert,
+        visualElements, isDraw,
+        isRockLoss, isRockWin,
+        isPaperLoss, isPaperWin,
+        isScissorsLoss, isScissorsWin,
+        drawAlert, lossAlert,
+        winAlert, showAlert
       ) => {
       $log.debug('O controller principal esta funcionando!');
       // scope shared vars
@@ -97,14 +144,6 @@ if (Meteor.isClient) {
       $scope.draws = 0;
       $scope.losses = 0;
       $scope.yourChoices = [];
-      // local vars
-      var isDraw = (elements, element, choice) => element === elements[choice];
-      var isRockLoss = (elements, element, choice) => element === rock && (elements[choice] === paper);
-      var isRockWin = (elements, element, choice) => element === rock && (elements[choice] === scissors);
-      var isPaperLoss = (elements, element, choice) => element === paper && (elements[choice] === scissors);
-      var isPaperWin = (elements, element, choice) => element === paper && (elements[choice] === rock);
-      var isScissorsLoss = (elements, element, choice) => element === scissors && (elements[choice] === rock);
-      var isScissorsWin = (elements, element, choice) => element === scissors && (elements[choice] === paper);
       // scope shared functions
       $scope.onChoose = (element) => {
         $log.debug('on choose ' + element);
@@ -117,52 +156,28 @@ if (Meteor.isClient) {
         $log.debug('Escolha da máquina: ' + elements[machineChoose]);
 
         if (isDraw(elements, element, machineChoose)) {
-          showAlert({
-            title: 'Empate',
-            template: 'Mesmo elemento escolhido!',
-          });
+          drawAlert();
           $scope.draws += 1;
         } else if (isRockLoss(elements, element, machineChoose)) {
-          showAlert({
-            title: 'Você perdeu',
-            template: '<img ng-src="' + visualElements.paperWin + '" class="result-img-adjusment">',
-          });
+          lossAlert(visualElements.paperWin);
           $scope.losses += 1;
         } else if (isRockWin(elements, element, machineChoose)) {
-          showAlert({
-            title: 'Você ganhou',
-            template: '<img ng-src="' + visualElements.win + '" class="result-img-adjusment">',
-          });
+          winAlert(visualElements.win);
           $scope.wins += 1;
         } else if (isPaperLoss(elements, element, machineChoose)) {
-          showAlert({
-            title: 'Você perdeu',
-            template: '<img ng-src="' + visualElements.scissorsWin + '" class="result-img-adjusment">',
-          });
+          lossAlert(visualElements.scissorsWin);
           $scope.losses += 1;
         } else if (isPaperWin(elements, element, machineChoose)) {
-          showAlert({
-            title: 'Você ganhou',
-            template: '<img ng-src="' + visualElements.win + '" class="result-img-adjusment">',
-          });
+          winAlert(visualElements.win);
           $scope.wins += 1;
         } else if (isScissorsLoss(elements, element, machineChoose)) {
-          showAlert({
-            title: 'Você perdeu',
-            template: '<img ng-src="' + visualElements.rockWin + '" class="result-img-adjusment">',
-          });
+          lossAlert(visualElements.rockWin);
           $scope.losses += 1;
         } else if (isScissorsWin(elements, element, machineChoose)) {
-          showAlert({
-            title: 'Você ganhou',
-            template: '<img ng-src="' + visualElements.rockWin + '" class="result-img-adjusment">',
-          });
+          winAlert(visualElements.win);
           $scope.wins += 1;
         } else {
-          showAlert({
-            title: 'Regra sem cobertura',
-            template: 'Regra sem cobertura'
-          });
+          uncoveredAlert();
           $scope.losses += 1;
         }
 
