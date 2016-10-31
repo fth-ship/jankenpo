@@ -120,14 +120,6 @@ if (Meteor.isClient) {
         });
       };
     }])
-    .factory('drawAlertIncrement', ['drawAlert', drawAlert => {
-      return _ => {
-        drawAlert({
-          title: draw,
-          template: sameElementMessage
-        });
-      };
-    }])
     .factory('lossAlert', ['showAlert', (showAlert) => {
       return (imagePath) => {
         showAlert({
@@ -179,6 +171,28 @@ if (Meteor.isClient) {
       $scope.draws = 0;
       $scope.losses = 0;
       $scope.yourChoices = [];
+      $scope.rock = ROCK;
+      $scope.paper = PAPER;
+      $scope.scissors = SCISSORS;
+      score = new Score({
+          persistant: true,
+          callback: function () {},
+          levels: [
+            {
+              checkmark: 10,
+              status: 'novato',
+              quote: 'Você esta apenas começando.',
+            }, {
+              checkmark: 20,
+              status: 'aprendiz',
+              quote: 'Agora, você tem alguma expêriencia.'
+            }, {
+              checkmark: 30,
+              status: 'veterano',
+              quote: 'Você tem uma boa expêriencia.'
+            }
+          ]
+      });
       // scope shared functions
       $scope.onChoose = (element) => {
         $log.debug('on choose ' + element);
@@ -196,29 +210,39 @@ if (Meteor.isClient) {
         } else if (isRockLoss(elements, element, machineChoose)) {
           lossAlert(visualElements[paperWin]);
           $scope.losses += 1;
+          score.decrement();
         } else if (isRockWin(elements, element, machineChoose)) {
           winAlert(visualElements[win]);
           $scope.wins += 1;
+          score.increment();
         } else if (isPaperLoss(elements, element, machineChoose)) {
           lossAlert(visualElements[scissorsWin]);
           $scope.losses += 1;
+          score.decrement();
         } else if (isPaperWin(elements, element, machineChoose)) {
           winAlert(visualElements[win]);
           $scope.wins += 1;
+          score.increment();
         } else if (isScissorsLoss(elements, element, machineChoose)) {
           lossAlert(visualElements[rockWin]);
           $scope.losses += 1;
+          score.decrement();
         } else if (isScissorsWin(elements, element, machineChoose)) {
           winAlert(visualElements[win]);
           $scope.wins += 1;
+          score.increment();
         } else {
           uncoveredAlert();
           $scope.losses += 1;
+          score.decrement();
         }
 
         $scope.rounds += 1;
         $scope.yourChoices.push(element);
+
+        $log.debug(score.scorecard());
       };
+      $scope.score = score;
     }])
     .run([
       '$log',

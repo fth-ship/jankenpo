@@ -5,6 +5,10 @@
   <ion-content class="padding custom-padding">
     <div class="list card card-custom">
       <div class="item item-icon-left item-text-custom">
+        <i class="icon ion-ribbon-a"></i>
+        Pontos {{score.scorecard().score}}
+      </div>
+      <div class="item item-icon-left item-text-custom">
         <i class="icon ion-android-done"></i>
         Jogou {{rounds}} vez{{rounds > 1 ? 'es':''}}
       </div>
@@ -26,21 +30,21 @@
       <ion-slide>
         <div class="list card card-custom">
           <div class="item item-image item-custom">
-            <img ng-src="imgs/rock.png" on-tap="onChoose('pedra')">
+            <img ng-src="imgs/rock.png" on-tap="onChoose(rock)">
           </div>
         </div>
       </ion-slide>
       <ion-slide>
         <div class="list card card-custom">
           <div class="item item-image item-custom">
-            <img ng-src="imgs/paper.png" on-tap="onChoose('papel')">
+            <img ng-src="imgs/paper.png" on-tap="onChoose(paper)">
           </div>
         </div>
       </ion-slide>
       <ion-slide>
         <div class="list card card-custom">
           <div class="item item-image item-custom">
-            <img ng-src="imgs/scissors.png" on-tap="onChoose('tesoura')">
+            <img ng-src="imgs/scissors.png" on-tap="onChoose(scissors)">
           </div>
         </div>
       </ion-slide>
