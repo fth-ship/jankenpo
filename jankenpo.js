@@ -4,21 +4,31 @@ const SCISSORS = 'tesoura';
 const rock = 'rock';
 const paper = 'paper';
 const scissors = 'scissors';
+const draw = 'Empate';
+const loss = 'Você perdeu';
+const gain = 'Você ganhou';
+const uncovered = 'Regra sem cobertura';
+const win = 'win';
+const paperWin = 'paperWin';
+const scissorsWin = 'scissorsWin';
+const rockWin = 'rockWin';
+const sameElementMessage = 'Mesmo elemento escolhido!';
 const imgs = {
   win: 'imgs/win.png',
   paperWin: 'imgs/paper-win.png',
   scissorsWin: 'imgs/scissors-win.png',
   rockWin: 'imgs/rock-win.png',
 };
+const resImgTag = imagePath => '<img ng-src="' + imagePath + '" class="result-img-adjusment">';
 
 if (Meteor.isClient) {
   angular
     .module('jankenpo', ['angular-meteor', 'ionic'])
     .value('visualElements', {
-      win: imgs['win'],
-      paperWin: imgs['paperWin'],
-      scissorsWin: imgs['scissorsWin'],
-      rockWin: imgs['rockWin'],
+      win: imgs[win],
+      paperWin: imgs[paperWin],
+      scissorsWin: imgs[scissorsWin],
+      rockWin: imgs[rockWin],
     })
     .value(rock, ROCK)
     .value(paper, PAPER)
@@ -105,32 +115,32 @@ if (Meteor.isClient) {
     .factory('drawAlert', ['showAlert', (showAlert) => {
       return () => {
         showAlert({
-          title: 'Empate',
-          template: 'Mesmo elemento escolhido!',
+          title: draw,
+          template: sameElementMessage,
         });
       };
     }])
     .factory('lossAlert', ['showAlert', (showAlert) => {
       return (imagePath) => {
         showAlert({
-          title: 'Você perdeu',
-          template: '<img ng-src="' + imagePath + '" class="result-img-adjusment">',
+          title: loss,
+          template: resImgTag(imagePath),
         });
       };
     }])
     .factory('winAlert', ['showAlert', (showAlert) => {
       return (imagePath) => {
         showAlert({
-          title: 'Você ganhou',
-          template: '<img ng-src="' + imagePath + '" class="result-img-adjusment">',
+          title: gain,
+          template: resImgTag(imagePath),
         });
       };
     }])
     .factory('uncoveredAlert', ['showAlert', (showAlert) => {
       return () => {
         showAlert({
-          title: 'Regra sem cobertura',
-          template: 'Regra sem cobertura'
+          title: uncovered,
+          template: uncovered
         });
       };
     }])
@@ -176,22 +186,22 @@ if (Meteor.isClient) {
           drawAlert();
           $scope.draws += 1;
         } else if (isRockLoss(elements, element, machineChoose)) {
-          lossAlert(visualElements.paperWin);
+          lossAlert(visualElements[paperWin]);
           $scope.losses += 1;
         } else if (isRockWin(elements, element, machineChoose)) {
-          winAlert(visualElements.win);
+          winAlert(visualElements[win]);
           $scope.wins += 1;
         } else if (isPaperLoss(elements, element, machineChoose)) {
-          lossAlert(visualElements.scissorsWin);
+          lossAlert(visualElements[scissorsWin]);
           $scope.losses += 1;
         } else if (isPaperWin(elements, element, machineChoose)) {
-          winAlert(visualElements.win);
+          winAlert(visualElements[win]);
           $scope.wins += 1;
         } else if (isScissorsLoss(elements, element, machineChoose)) {
-          lossAlert(visualElements.rockWin);
+          lossAlert(visualElements[rockWin]);
           $scope.losses += 1;
         } else if (isScissorsWin(elements, element, machineChoose)) {
-          winAlert(visualElements.win);
+          winAlert(visualElements[win]);
           $scope.wins += 1;
         } else {
           uncoveredAlert();
