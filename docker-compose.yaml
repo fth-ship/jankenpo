@@ -1,0 +1,18 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/code
+    # depends_on:
+      # - index
+      # - queue
+      # - database
+  # index:
+    # image: elasticsearch
+  # queue:
+    # image: rabbitmq
+  # database:
+    # image: mongo

@@ -84,22 +84,22 @@ if (Meteor.isClient) {
     .factory('isDraw', [() => {
       return (elements, element, choice) => element === elements[choice];
     }])
-    .factory('isRockLoss', ['rock', 'paper', (rock, paper) => {
+    .factory('isRockLoss', [rock, paper, (rock, paper) => {
       return (elements, element, choice) => element === rock && (elements[choice] === paper);
     }])
-    .factory('isRockWin', ['rock', 'scissors', (rock, scissors) => {
+    .factory('isRockWin', [rock, scissors, (rock, scissors) => {
       return (elements, element, choice) => element === rock && (elements[choice] === scissors);
     }])
-    .factory('isPaperLoss', ['paper', 'scissors', (paper, scissors) => {
+    .factory('isPaperLoss', [paper, scissors, (paper, scissors) => {
       return (elements, element, choice) => element === paper && (elements[choice] === scissors);
     }])
-    .factory('isPaperWin', ['paper', 'rock', (paper, rock) => {
+    .factory('isPaperWin', [paper, rock, (paper, rock) => {
       return (elements, element, choice) => element === paper && (elements[choice] === rock);
     }])
-    .factory('isScissorsLoss', ['scissors', 'rock', (scissors, rock) => {
+    .factory('isScissorsLoss', [scissors, rock, (scissors, rock) => {
       return (elements, element, choice) => element === scissors && (elements[choice] === rock);
     }])
-    .factory('isScissorsWin', ['scissors', 'paper', (scissors, paper) => {
+    .factory('isScissorsWin', [scissors, paper, (scissors, paper) => {
       return (elements, element, choice) => element === scissors && (elements[choice] === paper);
     }])
     .factory('drawAlert', ['showAlert', (showAlert) => {

@@ -1,1 +1,0 @@
-kaiquesilva@MacBook-Air-de-Kaique.local.48348
