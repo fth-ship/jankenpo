@@ -1,41 +1,63 @@
+const ROCK = 'pedra';
+const PAPER = 'papel';
+const SCISSORS = 'tesoura';
+const rock = 'rock';
+const paper = 'paper';
+const scissors = 'scissors';
+const imgs = {
+  win: 'imgs/win.png',
+  paperWin: 'imgs/paper-win.png',
+  scissorsWin: 'imgs/scissors-win.png',
+  rockWin: 'imgs/rock-win.png',
+};
+
 if (Meteor.isClient) {
   angular
     .module('jankenpo', ['angular-meteor', 'ionic'])
     .value('visualElements', {
-      win: 'imgs/win.png',
-      paperWin: 'imgs/paper-win.png',
-      scissorsWin: 'imgs/scissors-win.png',
-      rockWin: 'imgs/rock-win.png',
-
+      win: imgs['win'],
+      paperWin: imgs['paperWin'],
+      scissorsWin: imgs['scissorsWin'],
+      rockWin: imgs['rockWin'],
     })
-    .value('rock', 'pedra')
-    .value('paper', 'papel')
-    .value('scissors', 'tesoura')
+    .value(rock, ROCK)
+    .value(paper, PAPER)
+    .value(scissors, SCISSORS)
     .factory('nextElements', [
-      '$log', 'rock',
-      'paper', 'scissors', (
+      '$log', rock,
+      paper, scissors, (
       $log, rock,
       paper, scissors
     ) => {
       return (elements, element) => {
         $log.debug('next elements ' + elements + ' with ' + element);
-        var randomPosition = Math.max(0, Math.round(Math.random() * 1));
-        if (element === rock && (randomPosition)) {
+        let randomPosition = Math.max(0, Math.round(Math.random() * 1));
+        let isRock = (element === rock);
+        let isRockTossed = isRock && (randomPosition);
+        let isRockUntossed = isRock && (!randomPosition);
+        let isPaper = (element === paper);
+        let isPaperTossed = isPaper && (randomPosition);
+        let isPaperUntossed = isPaper && (!randomPosition);
+        let isScissors = (element === scissors);
+        let isScissorsTossed = isScissors && (randomPosition);
+        let isScissorsUntossed = isScissors && (!randomPosition);
+
+        if (isRockTossed) {
           elements.push(scissors);
           elements.push(paper);
-        } else if (element === rock && (!randomPosition)) {
+        } else if (isRockUntossed) {
           elements.push(paper);
           elements.push(scissors);
-        } else if (element === paper && (randomPosition)) {
+        } else if (isPaperTossed) {
           elements.push(scissors);
           elements.push(rock);
-        } else if (element === paper && (!randomPosition)) {
+        } else if (isPaperUntossed) {
           elements.push(scissors);
           elements.push(rock);
-        } else if (element === scissors && (randomPosition)) {
+        } else if (isScissorsTossed) {
           elements.push(rock);
           elements.push(paper);
-        } else if (element === scissors && (!randomPosition)) {
+        } else if (isScissorsUntossed) {
           elements.push(paper);
           elements.push(rock);
         }
