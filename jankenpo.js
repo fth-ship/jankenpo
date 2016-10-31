@@ -112,11 +112,19 @@ if (Meteor.isClient) {
     .factory('isScissorsWin', [scissors, paper, (scissors, paper) => {
       return (elements, element, choice) => element === scissors && (elements[choice] === paper);
     }])
-    .factory('drawAlert', ['showAlert', (showAlert) => {
-      return () => {
+    .factory('drawAlert', ['showAlert', showAlert => {
+      return _ => {
         showAlert({
           title: draw,
           template: sameElementMessage,
+        });
+      };
+    }])
+    .factory('drawAlertIncrement', ['drawAlert', drawAlert => {
+      return _ => {
+        drawAlert({
+          title: draw,
+          template: sameElementMessage
         });
       };
     }])
