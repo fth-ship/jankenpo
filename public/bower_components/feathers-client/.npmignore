@@ -1,0 +1,9 @@
+.git*
+.DS_Store
+.babelrc
+*.markdown
+*.md
+.idea
+!dist/
+!lib/
+src/

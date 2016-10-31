@@ -1,0 +1,20 @@
+{
+  "name": "ng-feathers",
+  "version": "1.6.1",
+  "description": "Feathers client for AngularJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt",
+    "clean": "rm -r bower_components/ node_modules/",
+    "init": "npm i && bower i"
+  },
+  "author": "Maik Hummel <m@ikhummel.com> (https://beevelop.com)",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-uglify": "2.0.0",
+    "grunt-standard": "^2.0.0",
+    "standard": "^8.0.0"
+  }
+}
