@@ -43,24 +43,19 @@ if (Meteor.isClient) {
         let isScissorsUntossed = isScissors && (!randomPosition);
 
         if (isRockTossed) {
-          elements.push(scissors);
-          elements.push(paper);
+          elements.push(scissors, paper);
         } else if (isRockUntossed) {
-          elements.push(paper);
-          elements.push(scissors);
+          elements.push(paper, scissors);
         } else if (isPaperTossed) {
-          elements.push(scissors);
-          elements.push(rock);
+          elements.push(scissors, rock);
         } else if (isPaperUntossed) {
-          elements.push(scissors);
-          elements.push(rock);
+          elements.push(scissors, rock);
         } else if (isScissorsTossed) {
-          elements.push(rock);
-          elements.push(paper);
+          elements.push(rock, paper);
         } else if (isScissorsUntossed) {
-          elements.push(paper);
-          elements.push(rock);
+          elements.push(paper, rock);
         }
+
         return elements;
       };
     }])
