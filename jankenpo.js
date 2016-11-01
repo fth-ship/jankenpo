@@ -70,7 +70,7 @@ if (Meteor.isClient) {
       };
     }])
     .factory('randomReverse', ['$log', ($log) => {
-      return (elements) => {
+      return elements => {
         $log.debug('random reverse with ' + elements);
         var isReverse = Math.max(0, Math.round(Math.random() * 1));
         if (isReverse) {
@@ -80,14 +80,14 @@ if (Meteor.isClient) {
       };
     }])
     .factory('machineChoice', ['$log', ($log) => {
-      return () => {
+      return _ => {
         $log.debug('machine choice');
         return Math.max(0, Math.floor(Math.random() * 3))
       };
     }])
     .factory('showAlert', [
       '$ionicPopup',
-      ($ionicPopup) => {
+      $ionicPopup => {
         return (obj) => $ionicPopup.alert(obj);
       }
     ])
@@ -239,6 +239,7 @@ if (Meteor.isClient) {
 
         $scope.rounds += 1;
         $scope.yourChoices.push(element);
+        $scope.fieldsDitter = 4;
 
         $log.debug(score.scorecard());
       };

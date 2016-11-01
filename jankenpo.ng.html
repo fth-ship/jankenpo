@@ -24,6 +24,10 @@
         <i class="icon ion-android-star-outline"></i>
         Perdeu {{losses}} vez{{losses > 1 ? 'es':''}}
       </div>
+      <div class="item item-icon-left item-text-custom">
+        <i class="icon ion-flame"></i>
+        Performance {{(score.scorecard().score + wins + draws + losses) / rounds}}
+      </div>
     </div>
     <!-- Elements of the game -->
     <ion-slide-box>
