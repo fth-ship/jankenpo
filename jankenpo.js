@@ -153,7 +153,8 @@ if (Meteor.isClient) {
       'isPaperLoss', 'isPaperWin',
       'isScissorsLoss', 'isScissorsWin',
       'drawAlert', 'lossAlert',
-      'winAlert', 'showAlert', (
+      'winAlert', 'showAlert',
+      '$http', (
         $log, $scope,
         $ionicPopup, nextElements,
         randomReverse, machineChoice,
@@ -162,7 +163,8 @@ if (Meteor.isClient) {
         isPaperLoss, isPaperWin,
         isScissorsLoss, isScissorsWin,
         drawAlert, lossAlert,
-        winAlert, showAlert
+        winAlert, showAlert,
+        $http
       ) => {
       $log.debug('O controller principal esta funcionando!');
       // scope shared vars
@@ -239,9 +241,15 @@ if (Meteor.isClient) {
 
         $scope.rounds += 1;
         $scope.yourChoices.push(element);
-        $scope.fieldsDitter = 4;
 
         $log.debug(score.scorecard());
+        $http.post('http://localhost:3030/rounds', {
+          wins: $scope.wins,
+          losses: $scope.losses,
+          draws: $scope.draws,
+          score: score.scorecard().score,
+          rounds: $scope.rounds,
+        }).then(console.log.bind(console));
       };
       $scope.score = score;
     }])
