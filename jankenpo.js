@@ -243,7 +243,7 @@ if (Meteor.isClient) {
         $scope.yourChoices.push(element);
 
         $log.debug(score.scorecard());
-        $http.post('http://localhost:3030/rounds', {
+        $http.post('https://still-shore-90545.herokuapp.com/rounds', {
           wins: $scope.wins,
           losses: $scope.losses,
           draws: $scope.draws,
