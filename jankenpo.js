@@ -22,6 +22,16 @@ const imgs = {
 const resImgTag = imagePath => '<img ng-src="' + imagePath + '" class="result-img-adjusment">';
 
 if (Meteor.isClient) {
+  if (turbojs) {
+    let blah = turbojs.alloc(1e6);
+    for (i = 0; i <= 1e6; i++) blah.data[i] = i;
+    console.log(blah.data.subarray(0, 5));
+    turbojs.run(blah, `void main(void) {
+      commit(read() * 4.);
+    }`);
+    console.log(blah.data.subarray(0, 5));
+  }
+
   angular
     .module('jankenpo', ['angular-meteor', 'ionic'])
     .value('visualElements', {
