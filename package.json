@@ -1,0 +1,32 @@
+{
+  "name": "jankenpo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "jankenpo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fth-ship/jankenpo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fth-ship/jankenpo/issues"
+  },
+  "homepage": "https://github.com/fth-ship/jankenpo#readme",
+  "dependencies": {
+    "backo2": "^1.0.2",
+    "component-bind": "^1.0.0",
+    "component-emitter": "^1.2.1",
+    "debug": "^2.2.0",
+    "engine.io-client": "^1.7.2",
+    "has-binary": "^0.1.7",
+    "indexof": "0.0.1",
+    "meteor-node-stubs": "^0.2.3",
+    "parseuri": "0.0.5",
+    "socket.io-parser": "^2.3.1",
+    "to-array": "^0.1.4"
+  }
+}
