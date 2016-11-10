@@ -24,9 +24,9 @@
         <i class="icon ion-android-star-outline"></i>
         Perdeu {{losses}} vez{{losses > 1 ? 'es':''}}
       </div>
-      <div class="item item-icon-left item-text-custom">
-        <i class="icon ion-flame"></i>
-        Quente {{Math.ceil((score.scorecard().score + wins + draws + losses) / rounds)}}
+
+      <div class="item item-text-custom">
+        <button class="button button-block button-balanced" on-tap="onChoose(chooseElement([rock, paper, scissors]))">Escolha aleatória</button>
       </div>
     </div>
     <!-- Elements of the game -->

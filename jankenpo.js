@@ -98,7 +98,7 @@ if (Meteor.isClient) {
     .factory('showAlert', [
       '$ionicPopup',
       $ionicPopup => {
-        return (obj) => $ionicPopup.alert(obj);
+        return obj => $ionicPopup.alert(obj);
       }
     ])
     .factory('isDraw', [() => {
@@ -131,7 +131,7 @@ if (Meteor.isClient) {
       };
     }])
     .factory('lossAlert', ['showAlert', (showAlert) => {
-      return (imagePath) => {
+      return imagePath => {
         showAlert({
           title: loss,
           template: resImgTag(imagePath),
@@ -139,7 +139,7 @@ if (Meteor.isClient) {
       };
     }])
     .factory('winAlert', ['showAlert', (showAlert) => {
-      return (imagePath) => {
+      return imagePath => {
         showAlert({
           title: gain,
           template: resImgTag(imagePath),
@@ -177,6 +177,7 @@ if (Meteor.isClient) {
         $http
       ) => {
       $log.debug('O controller principal esta funcionando!');
+
       // scope shared vars
       $scope.rounds = 0;
       $scope.wins = 0;
@@ -253,6 +254,7 @@ if (Meteor.isClient) {
         $scope.yourChoices.push(element);
 
         $log.debug(score.scorecard());
+
         $http.post('https://still-shore-90545.herokuapp.com/rounds', {
           wins: $scope.wins,
           losses: $scope.losses,
@@ -262,6 +264,7 @@ if (Meteor.isClient) {
         }).then(console.log.bind(console));
       };
       $scope.score = score;
+      $scope.chooseElement = elements => elements[Math.max(0, Math.round(Math.random() * 2))];
     }])
     .run([
       '$log',
