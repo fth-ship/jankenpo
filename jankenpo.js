@@ -1,3 +1,4 @@
+// jankenpo js file
 const ROCK = 'pedra';
 const PAPER = 'papel';
 const SCISSORS = 'tesoura';
